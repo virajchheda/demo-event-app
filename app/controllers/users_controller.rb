@@ -1,8 +1,8 @@
-class HomeController < ApplicationController
+class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :get_date, only: [:index]
+  before_action :get_date, only: [:dashboard]
 
-  def index
+  def dashboard
     param_date = get_date
     @date = param_date.present? && param_date[:date].present? ? Date.parse(param_date[:date]) : Date.today
     @time_line = Event.get_events_per_date(@date, current_user)

@@ -7,7 +7,7 @@ class User < ApplicationRecord
    has_many :invites, dependent: :destroy
    has_many :events, through: :invites do 
    	def owned
-   		where('invites.is_owner = ?', true)
+   		where('invites.owner = ?', true)
    	end
    end
 

@@ -4,9 +4,8 @@ class Invite < ApplicationRecord
   belongs_to :user
   belongs_to :event
 
-  # default_scope{ where(is_owner: false) }
-  scope :owned, -> { where(is_owner: true) }
-  scope :not_owned, -> { where(is_owner: false) }
+  scope :owned, -> { where(owner: true) }
+  scope :not_owned, -> { where(owner: false) }
   scope :unowned_pending, -> { not_owned.where(status: 'pending') }
   scope :unowned_accepted, -> { not_owned.where(status: 'accepted') }
   scope :unowned_rejected, -> { not_owned.where(status: 'rejected') }
