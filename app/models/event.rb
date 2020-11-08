@@ -2,23 +2,28 @@ class Event < ApplicationRecord
 	has_many :invites, dependent: :destroy
 	has_many :users, through: :invites do 
 		def owner
-			where('invites.is_owner = ?', true)
+			where('invites.owner = ?', true)
 		end
 	end
 
-	validates :name, :event_at, presence: true
-	validate :event_date_cannot_be_of_past, if: Proc.new{|obj| obj.new_record? || !obj.event_at.blank? }
+	default_scope{ order(created_at: :desc) }
+
+	validates :event_at, :description, presence: true
+	validate :event_date_cannot_be_of_past, if: Proc.new{|obj| obj.new_record? || obj.event_at_changed? }
+	validates :duration, numericality: { only_integer: true, greater_than: 0 }
+	validates :name, length: { maximum: 150, too_long: "should not be more than %{count} characters" }
+	validates :description, length: { maximum: 1500, too_long: "should not be more than %{count} characters" }
 
 	def event_date_cannot_be_of_past
 		if event_at.present? && event_at < DateTime.now
-			errors.add(:event_at, "cannot be in past")
+			errors.add(:event_at, "date cannot be in past")
 		end
 	end
 
 	def self.event_creation(params, user)
 		event  = Event.new(params)
 		if event.save
-			invite = event.invites.build(user_id: user.id, status: 'accepted', is_owner: true)
+			invite = event.invites.build(user: user, status: 'accepted', owner: true)
 			if invite.save
 				return true, event
 			end

@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   # before_action :set_user, only: [:index]/
 
   def index
-    @events = Event.includes(:invites).where({invites: {is_owner: true, user_id: current_user.id}})
+    @events = Event.includes(:invites).where({invites: {owner: true, user: current_user}})
   end
 
   def event_owner_check

@@ -12,18 +12,19 @@
         = f.text_field :name, class: "form-control", required: true
       .field.form-group
         = f.label :description, " Description (1500 characters limit)"
-        = f.text_area :description, class: "form-control", maxlength: 1500, rows: 5
+        = f.text_area :description, class: "form-control", rows: 5, required: true
       .field.form-group
         = f.label :event_at
         / %br
-        #datetimepicker.input-group.date
-          = f.datetime_select :event_at, class: "form-control"
+        
+        = f.text_field :event_at, value: f.object.event_at ? f.object.event_at.strftime('%B %d, %Y %I:%M %p') : nil, class: "form-control datetimepicker-input", id: "datetimepicker1"
+        / # = f.datetime_select :event_at, class: "form-control"
         
       .field.form-group
         = f.label :duration
         %br
         / # = f.time_select :duration, class: "form-control"
-        = f.time_field :duration, value: Time.parse(formatted_duration(f.object.duration.to_i)).strftime("%H:%M")
+        = f.time_field :duration, value: Time.parse(formatted_duration(f.object.duration.to_i)).strftime("%H:%M"), class:"form-control"
         / ,  min: '00:00', max: '23:59', ampm: false
         / = f.hidden_field :user_id, value: current_user.id
       .actions
@@ -34,6 +35,19 @@
 
 :javascript
   $(function () {
-    $('#datetimepicker').datetimepicker();
+
+    $('#datetimepicker1').datetimepicker({
+    format: 'MMMM D YYYY, h:mm A',
+    maxDate: new Date(Date.now() + (365 * 24 * 60 * 60 * 1000)),
+      sideBySide: true,
+  icons: {
+    up: 'fa fa-arrow-up',
+    down: 'fa fa-arrow-down',
+    previous: 'fa fa-chevron-left',
+    next: 'fa fa-chevron-right',
+    close: 'fa fa-times'
+  }
+
+  });
   });
 

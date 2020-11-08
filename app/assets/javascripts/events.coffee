@@ -3,8 +3,10 @@ $ ->
     console.log($(this).data('event-id'))
     name = "#user-email-"+$(this).data('event-id')
     console.log(name)
-    console.log($(this).data('event-email'))
-    $.ajax(createInvite($(this).data('event-id'), $(name).val().replace(/\s/g,'')))
+    $email = $(name).val().replace(/\s/g,'')
+    console.log($email)
+    $(name).val('')
+    $.ajax(createInvite($(this).data('event-id'), $email))
 
 
   createInvite = (event_id, user_email) ->
@@ -15,7 +17,6 @@ $ ->
     url: '/invites/create_invites'
     success: (data)  ->
       alert(data.msg)
-      $('#user_email').val('')
       window.location.reload()
     error: (data) ->
       console.log($.parseJSON(data.responseText).msg)

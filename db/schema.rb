@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201106073626) do
+ActiveRecord::Schema.define(version: 20201108130310) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20201106073626) do
   create_table "invites", force: :cascade do |t|
     t.integer "user_id"
     t.integer "event_id"
-    t.boolean "is_owner", default: false
+    t.boolean "owner",    default: false
     t.string  "status"
     t.index ["event_id"], name: "index_invites_on_event_id", using: :btree
     t.index ["user_id", "event_id"], name: "index_invites_on_user_id_and_event_id", unique: true, using: :btree

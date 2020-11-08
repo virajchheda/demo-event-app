@@ -4,10 +4,9 @@ class InvitesController < ApplicationController
   before_action :set_invite, only: [:update_status] 
 
   def index
-    @pending_invite = Invite.unowned_pending.where(user_id: current_user.id)
-    @accepted_invite = Invite.unowned_accepted.where(user_id: current_user.id)
-    @rejected_invite = Invite.unowned_rejected.where(user_id: current_user.id)
-    # Event.includes(:invites).where({invites: {is_owner: true, user_id: current_user.id}})
+    @pending_invite = Invite.unowned_pending.where(user: current_user)
+    @accepted_invite = Invite.unowned_accepted.where(user: current_user)
+    @rejected_invite = Invite.unowned_rejected.where(user: current_user)
   end
 
 
