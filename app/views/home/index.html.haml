@@ -1,0 +1,27 @@
+%h3 Your Events
+.form.date_search
+  = form_tag(dashboard_path, method: 'post') do
+    = date_field :search_date, 'date', style:"padding:0.5%"
+    = submit_tag 'Submit',  class:'btn btn-sm btn-primary'
+
+%h4= non_time_format_simple(@date)
+%table.table.table-hover
+  %thead
+    %tr
+      %th.w-10 Time
+      %th.w-110.text-center Events
+  %tbody
+    - @time_line.each do |time, events|
+      %tr
+        %td.w-10= hour_format(time)
+        %td.w-110
+          -events.each do |event|
+            .card{style: "margin:0.5%; border: 1px solid #90bcff; #{event[3]}: #90bcff"}
+              .card-body{style: "padding:1.1%;"}
+                =event[0]
+                |
+                =date_format_simple(event[1]) 
+                to
+                =date_format_simple(event[1] + event[2].minutes)
+
+            

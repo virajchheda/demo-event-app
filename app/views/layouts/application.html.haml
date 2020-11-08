@@ -1,0 +1,38 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}
+    %meta{content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0", name: "viewport"}
+    %title Event App
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    / <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  %body
+  / Navigation Bar
+  %nav.navbar.navbar-light.bg-light.d-flex
+    .container
+      .logop
+        %a.navbar-brand{:href => "#"}
+          Event App
+      .user-section
+        = link_to "Home", root_path
+        - if user_signed_in?
+          = link_to "Dashboard", root_path
+          = link_to "Invites", invites_path
+          = link_to "Events", events_path
+          = link_to "Logout", destroy_user_session_path, :method => :delete
+        - else
+          = link_to "Login", new_user_session_path
+  / Main content
+  %main.container{:style => "min-height: 500px; padding:10px"}
+    - if notice.present?
+      %p.notice.alert.alert-primary= notice
+    - if alert.present? 
+      %p.alert.alert.alert-danger= alert
+    = yield
+  / Footer
+  %footer.container.footer
+    %hr
+    %p.text-center © 2020 Event
+      

@@ -1,0 +1,86 @@
+@import "bootstrap";
+@import 'bootstrap-datetimepicker';
+
+.container{
+  max-width: 1300px;
+}
+.navbar{
+  border-bottom: 1px solid rgba(0,0,0,.0975);
+}
+.user-section{
+  a{
+    padding-left: 15px;
+    text-decoration: none;
+  }
+}
+
+.footer{
+  font-size: 12px;
+  padding-top: 30px;
+  p{
+    color: #999;
+  }
+}
+
+#error_explanation {
+  color: red;
+  ul {
+    color: red;
+  }
+}
+
+h3 {
+  font-size: 2em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.jumbotron{
+  text-align: center;
+}
+
+.hidden{ 
+    display: none;
+}
+
+/*td {
+  word-wrap:break-word;
+  word-break:break-all;
+}*/
+
+/*.card {display:inline-block;}*/
+
+.date_search{
+  text-align: center !important;
+}
+
+.table tbody tr td{
+  max-width:180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/*replacement of bootsrap .col-1, .col-2...*/
+.w5 {
+    width: 5%;
+}
+.w10 {
+    width: 10%;
+}
+.w15 {
+    width: 15%;
+}
+.w20 {
+    width: 20%;
+}
+.w25 {
+    width: 25%;
+}
+.w30 {
+    width: 30%;
+}
+.w110 {
+    width: 110%;
+}

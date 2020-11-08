@@ -1,0 +1,39 @@
+.col-md-6
+  = form_for @event do |f|
+    - if @event.errors.any?
+      #error_explanation.alert.alert-danger
+        / # %h2= #{pluralize(@event.errors.count, "error")} prohibited this event from being saved:"
+        %ul
+          - @event.errors.full_messages.each do |message|
+            %li= message
+    .form        
+      .field.form-group
+        = f.label :name
+        = f.text_field :name, class: "form-control", required: true
+      .field.form-group
+        = f.label :description, " Description (1500 characters limit)"
+        = f.text_area :description, class: "form-control", maxlength: 1500, rows: 5
+      .field.form-group
+        = f.label :event_at
+        / %br
+        #datetimepicker.input-group.date
+          = f.datetime_select :event_at, class: "form-control"
+        
+      .field.form-group
+        = f.label :duration
+        %br
+        / # = f.time_select :duration, class: "form-control"
+        = f.time_field :duration, value: Time.parse(formatted_duration(f.object.duration.to_i)).strftime("%H:%M")
+        / ,  min: '00:00', max: '23:59', ampm: false
+        / = f.hidden_field :user_id, value: current_user.id
+      .actions
+        = f.submit 'Save', class: 'btn btn-primary form-control'
+
+  %br
+  = link_to 'Back', events_path, class: 'btn btn-warning'
+
+:javascript
+  $(function () {
+    $('#datetimepicker').datetimepicker();
+  });
+

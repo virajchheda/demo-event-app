@@ -1,0 +1,44 @@
+%h3 Your events
+-if @events.present?
+  %table.table.table-hover
+    %thead
+      %tr
+        %th.w-10 Name
+        %th.w-30 Description
+        %th.w-20 Time
+        %th.w-10 Duration
+        %th.w-30 Actions
+
+    %tbody
+      - @events.each do |event|
+        %tr
+          %td= event.name
+          %td= event.description
+          %td= date_format(event.event_at)#.strftime("%a %b %e %R %p %Y")
+          %td= formatted_duration_hh_mm(event.duration)
+          %td
+            / = link_to 'Invite', event, class: "btn btn-warning"
+            %button.btn.btn-warning{"data-target": "#invite-modal-#{event.id}", 'data-toggle':'modal'} Invite
+            .modal.fade{id: "invite-modal-#{event.id}",role: 'dialog'}
+              .modal-dialog
+                .modal-content
+                  .modal-header
+                    %h5.text-muted Invite User
+                    %button.close{"aria-label": "Close", "data-dismiss": "modal", type: "button"}
+                      %span{"aria-hidden": "true"} &times;
+                  .modal-body.text-center
+                    .display_error.alert.alert-danger.hidden 
+                    = hidden_field_tag :event_id, event.id
+                    = text_field_tag :user_email, nil ,placeholder: 'Enter user email to invite', class:'form-control form-group', id:"user-email-#{event.id}"
+                    = submit_tag 'Submit', class:'btn btn-primary form-group invite_user', data:{event_id: event.id}
+            = link_to 'Edit', edit_event_path(event), class: "btn btn-primary"
+            = link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+
+  %br
+  = link_to 'New Event', new_event_path, class: "btn btn-primary"
+-else
+  .jumbotron
+    %h5 Sorry! you don't have any events 
+    = link_to 'Create Event', new_event_path, class: "btn btn-primary"
+
+
