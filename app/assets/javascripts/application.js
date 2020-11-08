@@ -21,15 +21,3 @@
 //= require bootstrap
 //= require moment
 //= require bootstrap-datetimepicker
-
-
-// $-> 
-//   $('#invite_user').click ->
-//     email = $('#user_email').val()
-//     console.log(email)
-//     if (email)
-//     else
-//       $('#display_error').removeClass('hidden') 
-//       // event_id = $('#event_id').val()
-
-// $('.datetimepicker').datepicker();

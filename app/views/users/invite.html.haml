@@ -1,0 +1,10 @@
+%h3 Invitations
+.row
+  .col
+    =render partial: 'invite_format', locals: {invite: @pending_invite, invite_type: 'Pending'}
+.row
+  .col
+    =render partial: 'invite_format', locals: {invite: @accepted_invite, invite_type: 'Accepted'}
+.row
+  .col
+    =render partial: 'invite_format', locals: {invite: @rejected_invite, invite_type: 'Rejected'}

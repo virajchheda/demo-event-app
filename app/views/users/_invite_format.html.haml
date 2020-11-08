@@ -1,3 +1,4 @@
+/ -partial for showing other user's event's as per theire states
 %h5 #{invite_type} Events
 - if invite.present?
   %table.table.table-hover
@@ -24,10 +25,6 @@
               =link_to 'Accept', invites_update_status_path(id: i, status: 'accepted'), method: :post, data:{ confirm: 'Are you sure?'}, class: "btn btn-success"
             -if i.status == 'pending' || i.status == 'accepted'  
               =link_to 'Reject', invites_update_status_path(id: i, status: 'rejected'), method: :post, data:{ confirm: 'Are you sure?'}, class: "btn btn-danger"
-          / -if i.status == 'rejected'
-          /   %td= link_to 'Accept', class:"btn btn-success"
-          / -if i.status == 'accepted'
-          /   %td= link_to 'Reject', class:"btn btn-alert"
 -else
   .alert.alert-primary
     %h6 No #{invite_type} Events!!

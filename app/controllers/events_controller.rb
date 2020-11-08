@@ -5,10 +5,12 @@ class EventsController < ApplicationController
   # before_action :set_user, only: [:index]/
 
   def index
+    #get all events that user wons
     @events = Event.includes(:invites).where({invites: {owner: true, user: current_user}})
   end
 
   def event_owner_check
+    #check if the user is not trying to edit other user's event
     unless @event.users.owner.ids.present? && @event.users.owner.ids & [current_user.id]
       flash[:notice] = 'Access denied as you are not owner of this Event'
       redirect_to events_path
@@ -16,6 +18,7 @@ class EventsController < ApplicationController
   end
 
   def show
+    #show will redirect to events page
     redirect_to events_path
   end
 
@@ -27,6 +30,7 @@ class EventsController < ApplicationController
   end
 
   def create
+    #calling model's method for evet creation as event creation will required entry in invite table
     status, @event = Event.event_creation(updated_params, current_user)
     respond_to do |format|
       if status
@@ -65,6 +69,8 @@ class EventsController < ApplicationController
       params.require(:event).permit(:name, :description, :event_at, :duration)
     end
 
+    #update params in needed as we are storing duration in minutes term
+    #so 2h: 00m will be converted to 2 * 60 = 120 minutes and stores
     def updated_params
       updated_params = event_params
       if updated_params["duration"]
@@ -73,6 +79,7 @@ class EventsController < ApplicationController
       end
     end
 
+    #method for converting hh:mm to minutes
     def duration_in_minutes(hour_minute)
       h_array = hour_minute.to_s.split(":")
       minutes = h_array[0].to_i * 60
