@@ -1,9 +1,12 @@
 class Invite < ApplicationRecord
-  enum status: {pending: 'pending', accepted: 'accepted', rejected: 'rejected'}
-  
+  #middle table for has many through association
   belongs_to :user
   belongs_to :event
 
+  #enum for status values
+  enum status: {pending: 'pending', accepted: 'accepted', rejected: 'rejected'}
+
+  #basic scopes
   scope :owned, -> { where(owner: true) }
   scope :not_owned, -> { where(owner: false) }
   scope :unowned_pending, -> { not_owned.where(status: 'pending') }

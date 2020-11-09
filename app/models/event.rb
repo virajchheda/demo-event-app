@@ -1,4 +1,6 @@
 class Event < ApplicationRecord
+
+  # created has many through reation with users via inites
   has_many :invites, dependent: :destroy
   has_many :users, through: :invites do 
     def owner
@@ -8,6 +10,7 @@ class Event < ApplicationRecord
 
   default_scope{ order(created_at: :desc) }
 
+  #basic validations
   validates :name, length: { maximum: 150, too_long: "should not be more than %{count} characters" }
   validates :description, length: { maximum: 1500, too_long: "should not be more than %{count} characters" }
   validates :event_at, :description, presence: true
@@ -33,7 +36,7 @@ class Event < ApplicationRecord
   end
 
   def self.check_owner(event_id, user)
-    #owner checking before senfding invites
+    #owner checking before sending invites and send's object and true/false depending on the current user's ownership
     event = Event.where(id: event_id).last
     return event, (event.users.owner.ids & [user.id]).present?
   end

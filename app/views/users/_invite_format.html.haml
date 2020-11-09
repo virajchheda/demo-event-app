@@ -18,7 +18,7 @@
           %td.w30= i.event.try(:description)
           %td.w20= date_format(i.event.try(:event_at))
           %td.w10= formatted_duration_hh_mm(i.event.try(:duration))
-          %td.w10= i.user.email
+          %td.w10= i.event.users.owner.last.email
           %td.w10= i.status
           %td
             -if i.status == 'pending' || i.status == 'rejected'
