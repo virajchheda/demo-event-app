@@ -11,9 +11,9 @@ class Event < ApplicationRecord
   default_scope{ order(created_at: :desc) }
 
   #basic validations
+  validates_presence_of :event_at, :description, :name, :description
   validates :name, length: { maximum: 150, too_long: "should not be more than %{count} characters" }
   validates :description, length: { maximum: 1500, too_long: "should not be more than %{count} characters" }
-  validates :event_at, :description, presence: true
   validates :duration, numericality: { only_integer: true, greater_than: 0 }
   validate :event_date_cannot_be_of_past, if: Proc.new{|obj| obj.new_record? || obj.event_at_changed? }
 

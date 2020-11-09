@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
   def self.email_exists?(email)
     #checking if user exist to whom invite is to be sent and returns object
-    return User.where("email = ?", email).last
+    return User.where("email = ?", email.downcase).last
   end
 
 end
