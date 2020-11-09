@@ -1,10 +1,7 @@
 $ ->
   $('.invite_user').click ->
-    console.log($(this).data('event-id'))
     name = "#user-email-"+$(this).data('event-id')
-    console.log(name)
     $email = $(name).val().replace(/\s/g,'')
-    console.log($email)
     $(name).val('')
     $.ajax(createInvite($(this).data('event-id'), $email))
 
@@ -19,6 +16,5 @@ $ ->
       alert(data.msg)
       window.location.reload()
     error: (data) ->
-      console.log($.parseJSON(data.responseText).msg)
       alert($.parseJSON(data.responseText).msg)
 
