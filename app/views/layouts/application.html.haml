@@ -16,7 +16,6 @@
         %a.navbar-brand{:href => root_path}
           Event App
       .user-section
-        = link_to "Home", root_path
         - if user_signed_in?
           = link_to "Dashboard", root_path
           = link_to "Invites", users_invite_path
