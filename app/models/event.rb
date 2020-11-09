@@ -46,19 +46,19 @@ class Event < ApplicationRecord
     time_line = {}
 
     #first get all events for that day
-    events = Event.unscoped.where(event_at: (date.beginning_of_day..date.end_of_day)).sort_by &:event_at
+    day_events = Event.unscoped.where(event_at: (date.beginning_of_day..date.end_of_day)).sort_by &:event_at
     #get user's accepted event
-    u = user.events.accpted_events.where(event_at:(date.beginning_of_day..date.end_of_day))
+    user_events = user.events.accpted_events.where(event_at:(date.beginning_of_day..date.end_of_day))
 
     #24 for representing 24hrs
     24.times.each do |i|
       time_line[i] = []
     end
 
-    events.each do |e|
+    day_events.each do |e|
       # check if event is present in user's accepted events 
       # then make colored if the user has accepted event or else leave it blank
-      color = u.include?(e) ? 'background' : 'none'
+      color = user_events.include?(e) ? 'background' : 'none'
       time_line[e.event_at.hour] << [e.name, e.event_at, e.duration.to_i, color]
     end
     

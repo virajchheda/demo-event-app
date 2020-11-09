@@ -21,11 +21,11 @@ class InvitesController < ApplicationController
         #check if user is owner of event
         event, owner_true = Event.check_owner(params[:event_id], current_user)
         if owner_true && event
-          success, msg = Invite.create_user_invite(user, event)
+          success, message = Invite.create_user_invite(user, event)
           if (success)
             format.json{ render json: {msg: 'Invite Successfully created'}, status: :ok}
           else
-            format.json{ render json: {msg: msg}, status: :ok}
+            format.json{ render json: {msg: message}, status: :ok}
           end
         else
            format.json { render json: {msg: 'Event does not exits or You are not the owner'}, status: :unprocessable_entity }

@@ -5,8 +5,7 @@ class UsersController < ApplicationController
   def dashboard
     #user dashboard 
     #if date is present search as per date or else today's date is considered
-    param_date = get_date
-    @date = param_date.present? && param_date[:date].present? ? Date.parse(param_date[:date]) : Date.today
+    @date = @param_date.present? && @param_date[:date].present? ? Date.parse(@param_date[:date]) : Date.today
     @time_line = Event.get_events_per_date(@date, current_user)
   end
 
@@ -22,7 +21,7 @@ class UsersController < ApplicationController
   def get_date 
     #check for passing date if date is present or else Date.today will be considered  
     if params.present? && params.key?(:search_date)
-      params.require(:search_date).permit(:date)
+      @param_date = params.require(:search_date).permit(:date)
     end
   end
 end
