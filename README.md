@@ -1,24 +1,5 @@
 # README
+Event App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Heroku Link:  http://demo-event-app.herokuapp.com/ (best viewed in chrome)
 
-Things you may want to cover:
-
-* Ruby version 2.4.5, Rails 5.0.1
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
