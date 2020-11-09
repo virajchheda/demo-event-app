@@ -24,7 +24,10 @@
 }
 
 #error_explanation {
-  color: red;
+  h2 {
+    visibility: hidden;
+  }
+
   ul {
     color: red;
   }
@@ -57,7 +60,7 @@ h3 {
 }
 
 .table tbody tr td{
-  max-width:180px;
+  max-width:190px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

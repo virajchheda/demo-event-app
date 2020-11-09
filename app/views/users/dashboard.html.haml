@@ -7,14 +7,15 @@
 %h4= non_time_format_simple(@date)
 %table.table.table-hover
   %thead
-    %tr
-      %th.w-10 Time
-      %th.w-110.text-center Events
+    %tr.table-primary
+      %th.w10 Time
+      %th.w110.text-center Events
   %tbody
+    / -loop for time along with events
     - @time_line.each do |time, events|
       %tr
-        %td.w-10= hour_format(time)
-        %td.w-110
+        %td.w10= hour_format(time)
+        %td.w110
           -events.each do |event|
             .card{style: "margin:0.5%; border: 1px solid #90bcff; #{event[3]}: #90bcff"}
               .card-body{style: "padding:1.1%;"}

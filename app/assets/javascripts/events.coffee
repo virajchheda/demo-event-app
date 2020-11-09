@@ -22,8 +22,3 @@ $ ->
       console.log($.parseJSON(data.responseText).msg)
       alert($.parseJSON(data.responseText).msg)
 
-
-  
-#$('.datetimepicker').datepicker();
-#$('#datetimepicker1').datetimepicker();
-  

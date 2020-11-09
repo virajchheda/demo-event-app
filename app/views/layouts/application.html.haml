@@ -16,11 +16,10 @@
         %a.navbar-brand{:href => root_path}
           Event App
       .user-section
-        = link_to "Home", root_path
         - if user_signed_in?
           = link_to "Dashboard", root_path
-          = link_to "Invites", invites_path
-          = link_to "Events", events_path
+          = link_to "Invites", users_invite_path
+          = link_to "Events", events_path,  method: :get #method get for loading events coffee 
           = link_to "Logout", destroy_user_session_path, :method => :delete
         - else
           = link_to "Login", new_user_session_path

@@ -1,33 +1,30 @@
+/ -partial for showing other user's event's as per theire states
 %h5 #{invite_type} Events
 - if invite.present?
   %table.table.table-hover
     %thead
-      %tr
-        %th.w-10 Name
-        %th.w-30 Description
-        %th.w-20 Time
-        %th.w-10 Duration
-        %th.w-10 Host
-        %th.w-10 Status
-        %th.w-10 Actions  
+      %tr.table-secondary
+        %th.w10 Name
+        %th.w30 Description
+        %th.w20 Time
+        %th.w10 Duration
+        %th.w10 Host
+        %th.w10 Status
+        %th.w10 Actions  
     %tbody
       - invite.each do |i|
         %tr
-          %td.w-10= i.event.try(:name)
-          %td.w-30= i.event.try(:description)
-          %td= date_format(i.event.try(:event_at))
-          %td= formatted_duration_hh_mm(i.event.try(:duration))
-          %td= i.user.email
-          %td= i.status
+          %td.w10= i.event.try(:name)
+          %td.w30= i.event.try(:description)
+          %td.w20= date_format(i.event.try(:event_at))
+          %td.w10= formatted_duration_hh_mm(i.event.try(:duration))
+          %td.w10= i.event.users.owner.last.email
+          %td.w10= i.status
           %td
             -if i.status == 'pending' || i.status == 'rejected'
               =link_to 'Accept', invites_update_status_path(id: i, status: 'accepted'), method: :post, data:{ confirm: 'Are you sure?'}, class: "btn btn-success"
             -if i.status == 'pending' || i.status == 'accepted'  
               =link_to 'Reject', invites_update_status_path(id: i, status: 'rejected'), method: :post, data:{ confirm: 'Are you sure?'}, class: "btn btn-danger"
-          / -if i.status == 'rejected'
-          /   %td= link_to 'Accept', class:"btn btn-success"
-          / -if i.status == 'accepted'
-          /   %td= link_to 'Reject', class:"btn btn-alert"
 -else
   .alert.alert-primary
     %h6 No #{invite_type} Events!!

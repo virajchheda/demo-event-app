@@ -1,9 +1,12 @@
 class Invite < ApplicationRecord
-  enum status: {pending: 'pending', accepted: 'accepted', rejected: 'rejected'}
-  
+  #middle table for has many through association
   belongs_to :user
   belongs_to :event
 
+  #enum for status values
+  enum status: {pending: 'pending', accepted: 'accepted', rejected: 'rejected'}
+
+  #basic scopes
   scope :owned, -> { where(owner: true) }
   scope :not_owned, -> { where(owner: false) }
   scope :unowned_pending, -> { not_owned.where(status: 'pending') }
@@ -11,6 +14,7 @@ class Invite < ApplicationRecord
   scope :unowned_rejected, -> { not_owned.where(status: 'rejected') }
 
   def update_status(update_params)
+    #check if transition is possible
     allowed = state_transition_check(self.status, update_params[:status])
     if allowed
       if self.update(update_params)
@@ -23,6 +27,7 @@ class Invite < ApplicationRecord
   end
 
   def self.create_user_invite(user, event)
+    #check if Invite is newly created if yes then now to epnding and send ture or else user was already invited or he might be th e owner because owner has his entry as accpeted in Invite table
     invite = Invite.where(user: user, event: event).first_or_initialize
     if invite.new_record? && invite.pending!
       return true
@@ -35,6 +40,8 @@ class Invite < ApplicationRecord
 
   def state_transition_check(from_state, to_state)
     #basic state macine like logic
+    #pending to 'accepted', 'rejected', 'pending' allowed
+    #['accepted', 'rejected'] can go into  each other but not pending
     if (
       (from_state == 'pending' && (['accepted', 'rejected', 'pending'].include?(to_state))) ||
       (['accepted', 'rejected'].include?(from_state && to_state))

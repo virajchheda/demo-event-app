@@ -2,7 +2,7 @@
 -if @events.present?
   %table.table.table-hover
     %thead
-      %tr
+      %tr.table-success
         %th.w-10 Name
         %th.w-30 Description
         %th.w-20 Time
@@ -32,7 +32,7 @@
                     = text_field_tag :user_email, nil ,placeholder: 'Enter user email to invite', class:'form-control form-group', id:"user-email-#{event.id}"
                     = submit_tag 'Submit', class:'btn btn-primary form-group invite_user', data:{event_id: event.id}
             = link_to 'Edit', edit_event_path(event), class: "btn btn-primary"
-            = link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+            = link_to 'Cancel', event, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
 
   %br
   .text-center
